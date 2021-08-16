@@ -1,10 +1,12 @@
 class ArticlesController < ApplicationController
+  # we are adding a method :set_article as a symbol to a method before_action, so that set_article can be performed on all specified actions first -> no need to call set_articel in all those actions separatelly
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
+
   def show
-    # article is an instance variable
-    @article = Article.find(params[:id])
   end
 
-  def index 
+  def index
+    # article is an instance variable
     @articles = Article.all
   end
 
@@ -13,12 +15,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit 
-    @article = Article.find(params[:id])
   end
 
   def create
     # specifying keys we want to permit to be saved to an instance variable
-    @article = Article.new(params.require(:article).permit(:title, :description))
+    @article = Article.new(article_params)
     # we can look at @article closer by specifying @article.inspect
     if @article.save
       # we give a notice a name we want, like :notice
@@ -31,13 +32,28 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
     # we are whitelisting a title and a description so they are available to use
-    if @article.update(params.require(:article).permit(:title, :description))
+    if @article.update(article_params)
       flash[:notice] = "Article was updated successfully."
       redirect_to @article
     else
       render 'edit'
     end 
   end
+
+  def destroy
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+  # All methods defined below "private" will only be available within this controller
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
+  def article_params
+    params.require(:article).permit(:title, :description)
+  end
+
 end

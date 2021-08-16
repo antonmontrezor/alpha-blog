@@ -11,10 +11,7 @@
   </head>
 
   <body>
-  <%# name here will be :notice and msg is a text value of that notice %>
-      <% flash.each do |name, msg| %> 
-        <%= msg %>
-      <% end %>
+    <%= render 'layouts/messages' %>
     <%= yield %>
   </body>
 </html>

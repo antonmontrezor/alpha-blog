@@ -5,7 +5,7 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Actions</th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -13,8 +13,14 @@
       <tr>
         <td><%= a.title %></td>
         <td><%= a.description %></td>
-        <td>Placeholder</td>
+        <td><%= link_to 'Show', article_path(a) %></td>
+        <td><%= link_to 'Edit', edit_article_path(a) %></td>
+        <%# creating a link and providing a url path for an article to be deleted, rails is smart enough to get an id from article(a) argument -> object, but we have to specify the method for the request to be "DELETE", here we use verb as a symbol %>
+        <td><%= link_to 'Delete', article_path(a), method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<p><%= link_to 'Create new article', new_article_path %></p>
+
