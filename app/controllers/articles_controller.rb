@@ -20,6 +20,7 @@ class ArticlesController < ApplicationController
   def create
     # specifying keys we want to permit to be saved to an instance variable
     @article = Article.new(article_params)
+    @article.user = User.first
 
     # we can look at @article closer by specifying @article.inspect
     if @article.save
