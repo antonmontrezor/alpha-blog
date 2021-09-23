@@ -10,4 +10,6 @@ Rails
     # Provides REST-ful routes to Rails resources (like articles)
     resources :articles
     # , only: [:show, :index, :new, :create, :edit, :update] # to keep only route for the listed action
+    get 'signup', to: 'users#new'
+    resources :users, except: [:new]
   end
