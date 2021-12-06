@@ -13,9 +13,11 @@
             <%# to cut off some part of description and leave a portion to be visible we use truncate method %>
             <p class="card-text"><%= truncate(a.description, length: 100) %></p>
             <%= link_to 'View', article_path(a), class: 'btn btn-outline-success' %>
-            <%= link_to 'Edit', edit_article_path(a), class: 'btn btn-outline-info' %>
-            <%# adding confirmation is a user wants to delete an article %>
-            <%= link_to 'Delete', article_path(a), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-outline-danger' %>
+            <% if logged_in? && a.user == current_user %>
+              <%= link_to 'Edit', edit_article_path(a), class: 'btn btn-outline-info' %>
+              <%# adding confirmation is a user wants to delete an article %>
+              <%= link_to 'Delete', article_path(a), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-outline-danger' %>
+            <% end %>
           </div>
           <div class="card-footer text-muted">
             <%# using helper method time_ago_in_words to display date in human readable format %>
