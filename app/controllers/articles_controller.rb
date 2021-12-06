@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  # we are adding a method :set_article as a symbol to a method before_action, so that set_article can be performed on all specified actions first -> no need to call set_articel in all those actions separatelly
+  # we are adding a method :set_article as a symbol to a method before_action, so that set_article can be performed on all specified actions first -> no need to call set_article in all those actions separatelly
   before_action :set_article, only: %i[show edit update destroy]
 
   def show; end
@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
   def create
     # specifying keys we want to permit to be saved to an instance variable
     @article = Article.new(article_params)
-    @article.user = User.first
+    @article.user = current_user
 
     # we can look at @article closer by specifying @article.inspect
     if @article.save

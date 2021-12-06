@@ -11,4 +11,5 @@ module ApplicationHelper
     # we can return a tag to views
     image_tag(gravatar_url, alt: user.username, class: 'rounded shadow mx-auto d-block')
   end
+
 end
