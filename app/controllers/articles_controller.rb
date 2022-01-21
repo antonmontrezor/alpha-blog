@@ -3,6 +3,8 @@
 class ArticlesController < ApplicationController
   # we are adding a method :set_article as a symbol to a method before_action, so that set_article can be performed on all specified actions first -> no need to call set_article in all those actions separatelly
   before_action :set_article, only: %i[show edit update destroy]
+  before_action :require_user, except: %i[show index]
+  before_action :require_same_user, only: %i[edit update destroy]
 
   def show; end
 
@@ -49,6 +51,10 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
 
+  def hello
+    puts 'Hello'
+  end
+
   private
 
   # All methods defined below "private" will only be available within this controller
@@ -58,5 +64,12 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :description)
+  end
+
+  def require_same_user
+    if current_user != @article.user && !current_user.admin?
+      flash[:alert] = 'You can only edit or delete your own article'
+      redirect_to @article
+    end
   end
 end
