@@ -7,6 +7,10 @@
             <% if a.user %>
               by <%= link_to a.user.username, user_path(a.user) %>
             <% end %>
+            <% if a.categories.any? %>
+          <%# go through a list of categories associated with an article and render each of the _category partial for each category, it will make a category object available inside the partial %>
+            <div class='mt-2'><%= render a.categories %></div>
+          <% end %>
           </div>
           <div class="card-body">
             <h5 class="card-title"><%= link_to a.title, article_path(a), class: 'text-success' %></h5>
